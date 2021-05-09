@@ -24,7 +24,7 @@ for img_name in img_list:
     V_channel = np.zeros_like(img[:,:,0])
     V_channel=HSV_img[:,:,2]   #V_channel赋值
     V_channel = np.float64(V_channel)    #转换成float 64，接下来对V空间进行处理，且赋值给一个中间量
-    temp=retinex.singleScaleRetinex(V_channel,300)   #有15，80，250三个选择，先选80
+    temp=retinex.SSR(V_channel,300)   #有15，80，250三个选择，先选80
     #temp = temp * 100   #数值太小了将每个像素乘以10
     temp= np.uint8(temp)       #将temp转换到unit8,方便图像显示，接下来赋值给hsv的V
 

@@ -122,3 +122,31 @@ def MSRCP(img, sigma_list, low_clip, high_clip):
     img_msrcp = np.uint8(img_msrcp - 1.0)
 
     return img_msrcp
+
+
+#从别处摘抄得SSR
+def SSR(img, variance):
+    img = np.float64(img) + 1.0
+    img_retinex = singleScaleRetinex(img, variance)
+    np.reshape(img_retinex,(img_retinex.shape[0],img_retinex.shape[1],1))#增加一个维度
+    for i in range(img_retinex.shape[2]):
+        unique, count = np.unique(np.int32(img_retinex[:, :, i] * 100), return_counts=True)
+        for u, c in zip(unique, count):
+            if u == 0:
+                zero_count = c
+                break
+        low_val = unique[0] / 100.0
+        high_val = unique[-1] / 100.0
+        for u, c in zip(unique, count):
+            if u < 0 and c < zero_count * 0.1:
+                low_val = u / 100.0
+            if u > 0 and c < zero_count * 0.1:
+                high_val = u / 100.0
+                break
+        img_retinex[:, :, i] = np.maximum(np.minimum(img_retinex[:, :, i], high_val), low_val)
+
+        img_retinex[:, :, i] = (img_retinex[:, :, i] - np.min(img_retinex[:, :, i])) / \
+                               (np.max(img_retinex[:, :, i]) - np.min(img_retinex[:, :, i])) \
+                               * 255
+    img_retinex = np.uint8(img_retinex)
+    return img_retinex
