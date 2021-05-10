@@ -34,3 +34,4 @@ for img_name in img_list:
     cv2.imshow('origin',img)
     cv2.imshow('refine',RGB)
     cv2.waitKey()
+    a=3#就是为了测试
