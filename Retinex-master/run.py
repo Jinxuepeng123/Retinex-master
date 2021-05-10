@@ -20,7 +20,7 @@ for img_name in img_list:
      #   continue
     
     img = cv2.imread(os.path.join(data_path, img_name))
-
+#diskm，再测试一下
     img_msrcr = retinex.MSRCR(
         img,
         config['sigma_list'],
