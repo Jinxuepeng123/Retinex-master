@@ -7,6 +7,7 @@ import json
 import numpy as np
 
 data_path = 'data/our485/low'
+fine_path='data/retinex_log/'
 img_list = os.listdir(data_path)
 if len(img_list) == 0:
     print('Data directory is empty.')
@@ -31,7 +32,7 @@ for img_name in img_list:
     HSV_img[:,:,2]=temp     #接下来将hsv转化到RGB
     RGB=cv2.cvtColor(HSV_img, cv2.COLOR_HSV2BGR)
 
-    cv2.imshow('origin',img)
-    cv2.imshow('refine',RGB)
-    cv2.waitKey()
-    a=3#就是为了测试
+    path=fine_path+img_name
+    cv2.imwrite(path, img)
+    print(path,'已保存')
+    #如何保存图片呢
