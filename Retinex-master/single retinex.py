@@ -33,6 +33,6 @@ for img_name in img_list:
     RGB=cv2.cvtColor(HSV_img, cv2.COLOR_HSV2BGR)
 
     path=fine_path+img_name
-    cv2.imwrite(path, img)
+    cv2.imwrite(path, RGB)  #保存的图片弄错了
     print(path,'已保存')
     #如何保存图片呢
