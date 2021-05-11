@@ -7,7 +7,7 @@ import json
 import numpy as np
 
 data_path = 'data/our485/low'
-fine_path='data/retinex_log/'
+fine_path='data/retinex_no_log/'
 img_list = os.listdir(data_path)
 if len(img_list) == 0:
     print('Data directory is empty.')

@@ -3,8 +3,8 @@ import cv2
 
 def singleScaleRetinex(img, sigma):
     #输入的是已经转化成float64的图像/矩阵
-    retinex = np.log(img) - np.log(cv2.GaussianBlur(img, (0, 0), sigma))  #np.log是自然对数
-    retinex=np.exp(retinex)   #和别的网上的代码不同我这里还是取了exp()运算
+    cita=10**-6   #防止分母为0
+    retinex = img / (cv2.GaussianBlur(img, (0, 0), sigma)+cita)
     return retinex
 
 def multiScaleRetinex(img, sigma_list):
@@ -126,9 +126,8 @@ def MSRCP(img, sigma_list, low_clip, high_clip):
 
 #从别处摘抄得SSR
 def SSR(img, variance):
-    img = np.float64(img) + 10**(-6)   #防止出现log(0)
-    img_retinex = singleScaleRetinex(img, variance)   #理论上像素值在[0,255]
-    #np.reshape(img_retinex,(img_retinex.shape[0],img_retinex.shape[1],1))#增加一个维度
+    img = np.float64(img)
+    img_retinex = singleScaleRetinex(img, variance)
 
     #如何获取矩阵的最大值和最小值
     max=img_retinex.max()
